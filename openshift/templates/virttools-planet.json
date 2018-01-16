@@ -88,7 +88,8 @@
                     "name": "${NAME}"
                 },
 		"tls": {
-		    "termination": "edge"
+		    "termination": "edge",
+		    "insecureEdgeTerminationPolicy": "Allow"
 		}
             }
         },
