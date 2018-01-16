@@ -1,0 +1,17 @@
+  Virt Tools planet site
+  ======================
+
+This directory contains content / configuration for managing
+
+    http(s)://planet.virttools.org
+    http(s)://planet.virt-tools.org
+
+The site is setup to run under OpenShift
+
+Initial load can be done with
+
+  oc process -f openshift/templates/virttools-planet.json  | oc create -f -
+
+Updates to the OpenShift config are manually activated using 'oc replace'.
+
+Updates to the content itself are automatically propagated via a planet hook.

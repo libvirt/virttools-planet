@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title><TMPL_VAR name></title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="description" content="Virt Tools are open source virtualization management tools for Linux system administrators.  This site provides tutorials, videos, documentation, online help and roadmaps to help you get started with and understand the tools." />
+  <meta name="keywords" content="planet, blog, virsh, virt-install, virt-manager, virt-top, virt-df, virt-p2v, virt-v2v, virt-viewer, virt-df, ncftool, augeas, aug-tool, guestfish, guestfs-browser, hivex, libguestfs, virt-what, kvm, qemu, libvirt" />
+  <meta name="generator" content="<TMPL_VAR generator ESCAPE="HTML">">
+
+  <link rel="stylesheet" href="https://virt-tools.org/css/standard.css" type="text/css" title="Standard"/>
+  <link rel="stylesheet" href="style.css" type="text/css" title="Standard"/>
+</head>
+
+<body>
+  <div id="planetheader">
+    <h1><TMPL_VAR name></h1>
+    <h2>News from <a href="http://www.qemu.org">QEMU</a>, <a href="http://www.linux-kvm.org">KVM</a>, <a href="http://libvirt.org">libvirt</a>, <a href="http://libguestfs.org">libguestfs</a>, <a href="http://virt-manager.org">virt-manager</a> and related tools</h2>
+  </div>
+
+  <div id="planetsidebar">
+    <div id="planetsubscriptions">
+      <h2>Subscriptions</h2>
+      <ul>
+	<TMPL_LOOP Channels>
+	  <li><a href="<TMPL_VAR link ESCAPE="HTML">" title="<TMPL_VAR title ESCAPE="HTML">"><TMPL_VAR name></a> <a href="<TMPL_VAR url ESCAPE="HTML">">(feed)</a></li>
+	</TMPL_LOOP>
+      </ul>
+    </div>
+
+    <div class="planetfeeds">
+      <h2>Planet Feeds</h2>
+      <ul>
+	<li><a id="planetfeedrss1" href="rss10.xml">RSS 1.0</a></li>
+	<li><a id="planetfeedrss2" href="rss20.xml">RSS 2.0</a></li>
+	<li><a id="planetfeedatom" href="atom.xml">Atom</a></li>
+	<li><a id="planetfeedfoaf" href="foafroll.xml">FOAF</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="planetposts">
+  <TMPL_LOOP Items>
+
+    <TMPL_IF new_date>
+      <h2 class="planetdate"><TMPL_VAR new_date></h2>
+    </TMPL_IF>
+
+    <TMPL_IF new_channel>
+      <h3 class="planetchannel"><a href="<TMPL_VAR channel_link ESCAPE="HTML">" title="<TMPL_VAR channel_title ESCAPE="HTML">"><TMPL_VAR channel_name></a>
+	<TMPL_IF channel_face>
+	  <br/>
+	  <span class="planetface">
+	    <a href="<TMPL_VAR channel_link ESCAPE="HTML">" title="<TMPL_VAR channel_title ESCAPE="HTML">"><img class="face" src="images/<TMPL_VAR channel_face ESCAPE="HTML">" width="<TMPL_VAR channel_facewidth ESCAPE="HTML">" height="<TMPL_VAR channel_faceheight ESCAPE="HTML">" alt=""></a>
+	  </span>
+	</TMPL_IF>
+      </h3>
+    </TMPL_IF>
+
+    <div class="planetitem">
+      <TMPL_IF title>
+	<h3 class="planettitle"><a href="<TMPL_VAR link ESCAPE="HTML">"><TMPL_VAR title></a></h3>
+      </TMPL_IF>
+      <div class="planetcontent">
+	<TMPL_VAR content>
+      </div>
+      <p class="planetauthor">
+	<em><a href="<TMPL_VAR link ESCAPE="HTML">"><TMPL_IF author>by <TMPL_VAR author> at </TMPL_IF><TMPL_VAR date></a></em>
+      </p>
+    </div>
+  </TMPL_LOOP>
+  </div>
+
+  <div id="planetfooter">
+    <a href="http://www.planetplanet.org/">Powered by Planet!</a><br>
+    <em>Last updated: <TMPL_VAR date></em>
+    <a href="https://www.openshift.com/" title="Powered by OpenShift Online"><br>
+      <img alt="Powered by OpenShift Online" src="https://www.openshift.com/images/logos/powered_by_openshift_reverse.png">
+    </a>
+  </div>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19035706-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+
+</html>

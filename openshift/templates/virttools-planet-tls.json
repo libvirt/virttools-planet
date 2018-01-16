@@ -1,0 +1,82 @@
+{
+    "apiVersion": "v1",
+    "kind": "Template",
+    "labels": {
+        "app": "virttools-planet",
+        "template": "virttools-planet"
+    },
+    "message": "The following service(s) have been created in your project: ${NAME}.\n",
+    "metadata": {
+        "name": "virtttools-planet",
+        "annotations": {
+            "openshift.io/display-name": "Virt Tools",
+            "description": "Static web for planet.virt-tools.org",
+            "tags": "quickstart,httpd",
+            "iconClass": "icon-apache",
+            "openshift.io/long-description": "Template for planet.virttools.org static web content",
+            "openshift.io/provider-display-name": "Libvirt",
+            "template.openshift.io/bindable": "false"
+        }
+    },
+    "objects": [
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "planet.virt-tools.org"
+            },
+            "spec": {
+                "host": "planet.virt-tools.org",
+                "to": {
+                    "kind": "Service",
+                    "name": "${NAME}"
+                },
+		"tls": {
+		    "termination": "edge",
+		    "insecureEdgeTerminationPolicy": "Redirect",
+		    "key": "${TLS_KEY}",
+		    "certificate":  "${TLS_CERT}"
+		}
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "planet.virttools.org"
+            },
+            "spec": {
+                "host": "planet.virttools.org",
+                "to": {
+                    "kind": "Service",
+                    "name": "${NAME}"
+                },
+		"tls": {
+		    "termination": "edge",
+		    "insecureEdgeTerminationPolicy": "Redirect",
+		    "key": "${TLS_KEY}",
+		    "certificate":  "${TLS_CERT}"
+		}
+            }
+        }
+    ],
+    "parameters": [
+        {
+            "name": "NAME",
+            "displayName": "Name",
+            "description": "The name assigned to all of the frontend objects defined in this template.",
+            "required": true,
+            "value": "virttools-planet"
+        },
+        {
+            "name": "TLS_KEY",
+            "displayName": "TLS key for public routes",
+            "description": "TLS key for public routes"
+        },
+        {
+            "name": "TLS_CERT",
+            "displayName": "TLS cert for public routes",
+            "description": "TLS cert for public routes"
+        }
+    ]
+}
