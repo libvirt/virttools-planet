@@ -294,7 +294,7 @@
 				"volumeMounts": [
 				    {
 					"name": "${NAME}-web",
-					"mountPath": "/opt/rh/httpd24/root/var/www/html"
+					"mountPath": "/opt/app-root/src"
 				    }
 				],
 				"readinessProbe": {
