@@ -120,7 +120,7 @@
                         "uri": "${SOURCE_REPOSITORY_URL}",
                         "ref": "${SOURCE_REPOSITORY_REF}"
                     },
-                    "contextDir": "${CONTEXT_DIR}"
+                    "contextDir": "${CONTEXT_DIR_UPDATER}"
                 },
                 "strategy": {
                     "type": "Source",
@@ -135,6 +135,72 @@
                     "to": {
                         "kind": "ImageStreamTag",
                         "name": "${NAME}-updater:latest"
+                    }
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange"
+                    },
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "GitHub",
+                        "github": {
+                            "secret": "${GITHUB_WEBHOOK_SECRET}"
+                        }
+                    },
+                    {
+                        "type": "Generic",
+                        "generic": {
+                            "secret": "${GENERIC_WEBHOOK_SECRET}"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}-web",
+                "annotations": {
+                    "description": "Keeps track of changes in the application image"
+                }
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "${NAME}-web",
+                "annotations": {
+                    "description": "Defines how to build the application",
+                    "template.alpha.openshift.io/wait-for-ready": "true"
+                }
+            },
+            "spec": {
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "${SOURCE_REPOSITORY_URL}",
+                        "ref": "${SOURCE_REPOSITORY_REF}"
+                    },
+                    "contextDir": "${CONTEXT_DIR_WEB}"
+                },
+                "strategy": {
+                    "type": "Source",
+                    "sourceStrategy": {
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "centos/httpd-24-centos7"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "${NAME}-web:latest"
                     }
                 },
                 "triggers": [
@@ -188,6 +254,19 @@
                         }
                     },
                     {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "virttools-planet-web"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "${NAME}-web:latest"
+                            }
+                        }
+                    },
+                    {
                         "type": "ConfigChange"
                     }
                 ],
@@ -206,7 +285,7 @@
                         "containers": [
                             {
                                 "name": "virttools-planet-web",
-                                "image": "centos/httpd-24-centos7:latest",
+                                "image": "docker-registry.default.svc:5000/libvirt/${NAME}-web:latest",
                                 "ports": [
                                     {
                                         "containerPort": 8080
@@ -311,10 +390,16 @@
             "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch."
         },
         {
-            "name": "CONTEXT_DIR",
+            "name": "CONTEXT_DIR_UPDATER",
             "displayName": "Context Directory",
             "description": "Set this to the relative path to your project if it is not in the root of your repository.",
             "value": "updater"
+        },
+        {
+            "name": "CONTEXT_DIR_WEB",
+            "displayName": "Context Directory",
+            "description": "Set this to the relative path to your project if it is not in the root of your repository.",
+            "value": "web"
         },
         {
             "name": "APPLICATION_DOMAIN",
