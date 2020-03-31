@@ -1,0 +1,14 @@
+
+image: centos:7
+
+pages:
+  stage: build
+  cache:
+    paths:
+      - cache/
+    key: "$CI_JOB_NAME"
+  script:
+    - python2 planet.py virt-tools/config.ini
+  artifacts:
+    paths:
+      - public
