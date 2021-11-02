@@ -354,7 +354,7 @@ class _FeedParserMixin:
                   'http://www.itunes.com/DTDs/PodCast-1.0.dtd':           'itunes',
                   'http://example.com/DTDs/PodCast-1.0.dtd':              'itunes',
                   'http://purl.org/rss/1.0/modules/link/':                'l',
-                  'http://search.yahoo.com/mrss':                         'media',
+                  'http://search.yahoo.com/mrss/':                        'media',
                   'http://madskills.com/public/xml/rss/module/pingback/': 'pingback',
                   'http://prismstandard.org/namespaces/1.2/basic/':       'prism',
                   'http://www.w3.org/1999/02/22-rdf-syntax-ns#':          'rdf',
