@@ -8,7 +8,8 @@ This directory contains content / configuration for managing
 
 How to add your blog
 --------------------
-Add a config.ini section for your blog to `virt-tools/config.ini`:
+
+Edit `virt-tools/config.ini` to add section for your blog:
 
 ```
 [https://example.org/my/blog/feed/]
@@ -23,12 +24,36 @@ and `faceheight` (logo image height in pixels) are optional attributes that
 describe the logo image associated with your blog.  Remember to add your image
 file into the `public/images/` directory if you wish to use an image.
 
-Please send a patch email to `libvir-list@redhat.com`:
+How to submit your change
+-------------------------
+
+Contribution follows the normal GitLab merge request workflow. If
+not already familiar with this, instructions follow below.
+
+The first step is to create a personal fork of the main repository by
+visiting:
+
+ * https://gitlab.com/libvirt/virttools-planet/
+
+and selecting the "fork" button. Now checkout the repository, add
+your fork and create a local branch for the changes
 
 ```
-$ git commit -as
-$ git send-email --to libvir-list@redhat.com --cc berrange@redhat.com HEAD^..
+  $ git clone https://gitlab.com/libvirt/virttools-planet
+  $ cd virttools-planet
+  $ git remote add gitlab ssh://git@gitlab.com/{YOURUSERNAME}/virttools-planet
+  $ git checkout -b add-blog
 ```
+
+Now make the changes described in the previous section and commit them.
+
+Finally push to your fork:
+
+```
+  $ git push gitlab add-blog
+```
+
+and open a merge request from the web interface.
 
 How to run the site
 -------------------
