@@ -24,6 +24,7 @@ pages:
       - cache/
     key: "$CI_JOB_NAME"
   script:
+    - yum update -y ca-certificates
     - python2 planet.py virt-tools/config.ini
   artifacts:
     paths:
