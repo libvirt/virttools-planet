@@ -613,6 +613,7 @@ class Channel(cache.CachedInfo):
         elif info.bozo and info.bozo_exception.__class__.__name__=='Timeout':
            self.url_status = str(408)
         else:
+            log.warning("Feed update error %s", info.get("bozo_exception"))
             self.url_status = str(500)
 
         if self.url_status == '301' and \
