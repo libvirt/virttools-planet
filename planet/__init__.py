@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
 """Planet aggregator library.
 
 This package is a library for developing web sites or software that

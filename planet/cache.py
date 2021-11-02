@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
 """Item cache.
 
 Between runs of Planet we need somewhere to store the feed information
