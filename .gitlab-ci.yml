@@ -25,9 +25,9 @@ pages:
       - cache/
     key: "$CI_JOB_NAME"
   script:
-    - dnf -y install python3-pip
-    - pip3 install feedparser
-    - python3 planet.py virt-tools/config.ini
+    - dnf -y install python3.11 python3.11-pip
+    - pip3.11 install feedparser jinja2
+    - python3.11 planet.py virt-tools/config.ini
   artifacts:
     paths:
       - public

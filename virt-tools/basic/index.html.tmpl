@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title><TMPL_VAR name></title>
+  <title>{{ name | e }}</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="description" content="Virt Tools are open source virtualization management tools for Linux system administrators.  This site provides tutorials, videos, documentation, online help and roadmaps to help you get started with and understand the tools." />
   <meta name="keywords" content="planet, blog, virsh, virt-install, virt-manager, virt-top, virt-df, virt-p2v, virt-v2v, virt-viewer, virt-df, ncftool, augeas, aug-tool, guestfish, guestfs-browser, hivex, libguestfs, virt-what, kvm, qemu, libvirt" />
-  <meta name="generator" content="<TMPL_VAR generator ESCAPE="HTML">">
+  <meta name="generator" content="{{ generator | e }}">
 
   <link rel="stylesheet" href="style.css" type="text/css" title="Standard"/>
 </head>
 
 <body>
   <div id="planetheader">
-    <h1><TMPL_VAR name></h1>
+    <h1>{{ name | e }}</h1>
     <h2>News from <a href="http://www.qemu.org">QEMU</a>, <a href="http://www.linux-kvm.org">KVM</a>, <a href="http://libvirt.org">libvirt</a>, <a href="http://libguestfs.org">libguestfs</a>, <a href="http://virt-manager.org">virt-manager</a> and related tools</h2>
   </div>
 
@@ -20,9 +20,9 @@
     <div id="planetsubscriptions">
       <h2>Subscriptions</h2>
       <ul>
-	<TMPL_LOOP Channels>
-	  <li><a href="<TMPL_VAR link ESCAPE="HTML">" title="<TMPL_VAR title ESCAPE="HTML">"><TMPL_VAR name></a> <a href="<TMPL_VAR url ESCAPE="HTML">">(feed)</a></li>
-	</TMPL_LOOP>
+	{% for c in Channels %}
+	  <li><a href="{{ c.link | e }}" title="{{ c.title | e }}">{{ c.name | e }}></a> <a href="{{ c.url | e }}">(feed)</a></li>
+	{% endfor %}
         <li><a href="https://gitlab.com/libvirt/virttools-planet/-/blob/master/README.md">Add your blog!</a></li>
       </ul>
     </div>
@@ -39,55 +39,43 @@
   </div>
 
   <div id="planetposts">
-  <TMPL_LOOP Items>
+  {% for i in Items %}
 
-    <TMPL_IF new_date>
-      <h2 class="planetdate"><TMPL_VAR new_date></h2>
-    </TMPL_IF>
+    {% if i.new_date %}
+      <h2 class="planetdate">{{ i.new_date }}</h2>
+    {% endif %}
 
-    <TMPL_IF new_channel>
-      <h3 class="planetchannel"><a href="<TMPL_VAR channel_link ESCAPE="HTML">" title="<TMPL_VAR channel_title ESCAPE="HTML">"><TMPL_VAR channel_name></a>
-	<TMPL_IF channel_face>
+    {% if i.new_channel %}
+      <h3 class="planetchannel"><a href="{{ i.channel_link | e }}" title="{{ i.channel_title | e }}">{{ i.channel_name | e }}</a>
+	{% if i.channel_face %}
 	  <br/>
 	  <span class="planetface">
-	    <a href="<TMPL_VAR channel_link ESCAPE="HTML">" title="<TMPL_VAR channel_title ESCAPE="HTML">"><img class="face" src="images/<TMPL_VAR channel_face ESCAPE="HTML">" width="<TMPL_VAR channel_facewidth ESCAPE="HTML">" height="<TMPL_VAR channel_faceheight ESCAPE="HTML">" alt=""></a>
+	    <a href="{{ i.channel_link | e }}" title="{{ i.channel_title | e }}"><img class="face" src="images/{{ i.channel_face | e }}" width="{{ i.channel_facewidth }}" height="{{ i.channel_faceheight }}>" alt="{{ i.chanel_title }}"></a>
 	  </span>
-	</TMPL_IF>
+	{% endif %}
       </h3>
-    </TMPL_IF>
+    {% endif %}
 
     <div class="planetitem">
-      <TMPL_IF title>
-	<h3 class="planettitle"><a href="<TMPL_VAR link ESCAPE="HTML">"><TMPL_VAR title></a></h3>
-      </TMPL_IF>
+      {% if i.title %}
+	<h3 class="planettitle"><a href="{{ i.link | e }}">{{ i.title | e }}</a></h3>
+      {% endif %}
       <div class="planetcontent">
-	<TMPL_VAR content>
+	{{ i.content }}
       </div>
       <p class="planetauthor">
-	<em><a href="<TMPL_VAR link ESCAPE="HTML">"><TMPL_IF author>by <TMPL_VAR author> at </TMPL_IF><TMPL_VAR date></a></em>
+	<em><a href="{{ i.link | e }}">{% if i.author %}by {{ i.author | e }} at {% endif %}{{ i.date }}</a></em>
       </p>
     </div>
-  </TMPL_LOOP>
+  {% endfor %}
   </div>
 
   <div id="planetfooter">
     <a href="http://www.planetplanet.org/">Powered by Planet!</a><br>
-    <em>Last updated: <TMPL_VAR date></em>
+    <em>Last updated: {{ date }}</em>
     &mdash;
     <a href="https://gitlab.com/libvirt/virttools-planet/-/blob/master/virt-tools/basic/index.html.tmpl" title="Edit this page">Edit this page</a>
   </div>
-
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-19035706-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
 
 </body>
 
