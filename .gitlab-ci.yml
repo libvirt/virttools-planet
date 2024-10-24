@@ -9,7 +9,7 @@ stages:
 # merge requests are submitted
 check-dco:
   stage: prebuild
-  image: registry.gitlab.com/libvirt/libvirt-ci/check-dco:master
+  image: registry.gitlab.com/libvirt/libvirt-ci/check-dco:latest
   script:
     - /check-dco
   except:
@@ -19,6 +19,7 @@ check-dco:
 pages:
   image: centos:7
   stage: build
+  needs: []
   cache:
     paths:
       - cache/
