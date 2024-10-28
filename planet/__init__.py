@@ -27,9 +27,9 @@ from xml.sax.saxutils import escape
 
 import feedparser
 import jinja2
-from markupsafe import Markup
 
 from . import cache
+from . import sanitize
 
 # Limit the effect of "from planet import *"
 __all__ = (
@@ -74,15 +74,14 @@ ACTIVITY_THRESHOLD = 0
 class stripHtml(HTMLParser):
     """remove all tags from the data"""
 
-    def __init__(self):
+    def __init__(self, data):
         super().__init__()
-        self.result = []
+        self.result = ''
+        self.feed(data)
+        self.close()
 
     def handle_data(self, data):
-        self.result.append(data)
-
-    def get_data(self):
-        return "".join(self.result)
+        if data: self.result+=data
 
 
 def template_info(item, date_format):
@@ -96,8 +95,8 @@ def template_info(item, date_format):
             info[key + "_822"] = time.strftime(TIMEFMT_822, date)
         else:
             info[key] = item[key]
-    if "title" in item.keys():
-        info["title_plain"] = Markup(info["title"])
+    if 'title' in item.keys():
+        info['title_plain'] = stripHtml(info['title']).result
 
     return info
 
@@ -782,7 +781,7 @@ class Channel(cache.CachedInfo):
                     detail = key + "_detail"
                     if detail in feed and "type" in feed[detail]:
                         if feed[detail].type == "text/html":
-                            feed[key] = Markup(feed[key])
+                            feed[key] = sanitize.HTML(feed[key])
                         elif feed[detail].type == "text/plain":
                             feed[key] = escape(feed[key])
                     self.set_as_string(key, feed[key])
@@ -980,7 +979,7 @@ class NewsItem(cache.CachedInfo):
                 value = ""
                 for item in entry[key]:
                     if item.type == "text/html":
-                        item.value = Markup(item.value)
+                        item.value = sanitize.HTML(item.value)
                     elif item.type == "text/plain":
                         item.value = escape(item.value)
                     if (
@@ -1001,7 +1000,7 @@ class NewsItem(cache.CachedInfo):
                     if detail in entry:
                         if "type" in entry[detail]:
                             if entry[detail].type == "text/html":
-                                entry[key] = Markup(entry[key])
+                                entry[key] = sanitize.HTML(entry[key])
                             elif entry[detail].type == "text/plain":
                                 entry[key] = escape(entry[key])
                     self.set_as_string(key, entry[key])
