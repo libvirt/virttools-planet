@@ -39,7 +39,7 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
       'img', 'input', 'isindex', 'link', 'meta', 'param']
     
     _r_barebang = re.compile(r'<!((?!DOCTYPE|--|\[))', re.IGNORECASE)
-    _r_bareamp = re.compile("&(?!#\d+;|#x[0-9a-fA-F]+;|\w+;)")
+    _r_bareamp = re.compile(r'&(?!#\d+;|#x[0-9a-fA-F]+;|\w+;)')
     _r_shorttag = re.compile(r'<([^<\s]+?)\s*/>')
     
     def __init__(self, encoding):
