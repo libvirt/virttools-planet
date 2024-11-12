@@ -21,7 +21,7 @@
       <h2>Subscriptions</h2>
       <ul>
 	{% for c in Channels %}
-	  <li><a href="{{ c.link | e }}" title="{{ c.title | e }}">{{ c.name | e }}></a> <a href="{{ c.url | e }}">(feed)</a></li>
+	  <li><a href="{{ c.link | e }}" title="{{ c.title | e }}">{{ c.name | e }}</a> <a href="{{ c.url | e }}">(feed)</a></li>
 	{% endfor %}
         <li><a href="https://gitlab.com/libvirt/virttools-planet/-/blob/master/README.md">Add your blog!</a></li>
       </ul>
