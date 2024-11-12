@@ -62,7 +62,7 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
         data = self._r_barebang.sub(r'&lt;!\1', data)
         data = self._r_bareamp.sub("&amp;", data)
         data = self._r_shorttag.sub(self._shorttag_replace, data) 
-        if self.encoding and type(data) == type(u''):
+        if self.encoding and type(data) == bytes:
             data = data.encode(self.encoding)
         sgmllib.SGMLParser.feed(self, data)
 
@@ -77,13 +77,7 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
         # attrs is a list of (attr, value) tuples
         # e.g. for <pre class='screen'>, tag='pre', attrs=[('class', 'screen')]
         if _debug: sys.stderr.write('_BaseHTMLProcessor, unknown_starttag, tag=%s\n' % tag)
-        uattrs = []
-        # thanks to Kevin Marks for this breathtaking hack to deal with (valid) high-bit attribute values in UTF-8 feeds
-        for key, value in attrs:
-            if type(value) != type(u''):
-                value = unicode(value, self.encoding)
-            uattrs.append((unicode(key, self.encoding), value))
-        strattrs = u''.join([u' %s="%s"' % (key, value) for key, value in uattrs]).encode(self.encoding)
+        strattrs = "".join([' %s="%s"' % (key, value) for key, value in attrs])
         if tag in self.elements_no_end_tag:
             self.pieces.append('<%(tag)s%(strattrs)s />' % locals())
         else:
